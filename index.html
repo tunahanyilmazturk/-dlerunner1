@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Idle Blade Runner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="app">
+      <main class="stage-area">
+        <div id="game-root"></div>
+        <div class="hero-hud">
+          <div id="hero-frame" class="hero-frame"></div>
+          <div id="quest-tracker" class="quest-tracker"></div>
+        </div>
+        <div id="hud" class="hud"></div>
+        <div id="toasts" class="toasts"></div>
+        <div id="chatlog" class="chatlog"></div>
+        <div id="windows" class="windows"></div>
+        <footer id="bottombar" class="bottombar">
+          <div id="bar-left" class="bar-left"></div>
+          <div id="skillbar" class="skillbar"></div>
+          <nav id="menubar" class="menubar" aria-label="Menüler"></nav>
+        </footer>
+      </main>
+    </div>
+    <div id="modal-root"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
