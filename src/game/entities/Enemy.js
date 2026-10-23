@@ -303,6 +303,7 @@ export class Enemy extends Phaser.GameObjects.Container {
     this.auraTween?.stop();
     this.trailTween?.stop();
     this.warningTween?.stop();
+    this.telegraphTween?.stop();
     this.shieldTween?.stop();
     this.warning?.setVisible(false);
     this.bossShield?.setVisible(false);

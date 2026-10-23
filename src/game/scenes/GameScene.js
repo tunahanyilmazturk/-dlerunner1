@@ -190,7 +190,7 @@ export class GameScene extends Phaser.Scene {
     const attacker = this.enemies.front;
     const contact = attacker && !this.recovering && !attacker.frozen && this.enemies.isInContact(attacker);
     if (attacker?.mechanics && !this.recovering) this.updateBoss(attacker, dt, contact);
-    if (contact && this.enemies.front === attacker && !attacker.dead) {
+    if (contact) {
       attacker.attackTimer += dt;
       const mech = attacker.mechanics;
       if (attacker.attackTimer >= attacker.attackInterval * (mech?.attackIntervalMult ?? 1)) {
@@ -229,7 +229,11 @@ export class GameScene extends Phaser.Scene {
     if (hit.isCrit && settings.screenShake) this.cameras.main.shake(90, 0.004);
 
     const died = enemy.takeDamage(hit.amount);
-    if (enemy.mechanics && !died) this.handleBossEvents(enemy, enemy.mechanics.onDamage(hit.amount, enemy.hp, enemy.maxHp));
+    // Simülatörle aynı sıra: hasar önce mekaniğe işlenir; görsel olaylar sadece canlıyken oynanır
+    if (enemy.mechanics) {
+      const events = enemy.mechanics.onDamage(hit.amount, enemy.hp, enemy.maxHp);
+      if (!died) this.handleBossEvents(enemy, events);
+    }
     if (died) this.killEnemy(enemy);
   }
 
