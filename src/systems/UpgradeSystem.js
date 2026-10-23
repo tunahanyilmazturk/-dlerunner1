@@ -132,7 +132,7 @@ export class UpgradeSystem {
       // Sadece ekipmandan gelen statlar (GameScene ve denge simülatörü kullanır)
       stats.damageReduction = Math.min(EQUIPMENT.MAX_DEFENSE, b.defense + t.defense);
       stats.runSpeedMultiplier = 1 + Math.min(EQUIPMENT.MAX_RUN_SPEED, b.runSpeed);
-      stats.xpMultiplier = (1 + b.xpGain) * (1 + t.xp);
+      stats.xpMultiplier = (1 + b.xpGain) * (1 + t.xp) * (1 + (p?.xpGain ?? 0));
       this.cachedStats = Object.freeze(stats);
     }
     return this.cachedStats;

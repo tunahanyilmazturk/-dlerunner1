@@ -9,7 +9,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "sim": "node tools/balance-sim.js",
-    "test": "node --test test/"
+    "test": "node --test test/",
+    "check": "npm test && node tools/check.js"
   },
   "dependencies": {
     "phaser": "^3.90.0"

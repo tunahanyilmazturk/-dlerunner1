@@ -119,6 +119,20 @@ export const SKILLS = [
     color: 0xc9a7ff,
     effect: { type: 'buff', summonMult: 1.2, summonInterval: 0.5 },
   },
+  {
+    id: 'fateEdge',
+    name: 'Kader Kesiği',
+    icon: '🗡️',
+    hotkey: '9',
+    description: 'Öndeki düşmana vuruş hasarının 10 katı vurur; canı %35\'in altındaysa bu 4 katına çıkar.',
+    cooldown: 22,
+    duration: 0,
+    unlockStage: 30,
+    auto: 'target',
+    requiresTarget: true,
+    color: 0xff4d6a,
+    effect: { type: 'strike', damageMult: 10, executeBelow: 0.35, executeMult: 4 },
+  },
 ];
 
 export const SKILL_MAP = Object.fromEntries(SKILLS.map((s) => [s.id, s]));

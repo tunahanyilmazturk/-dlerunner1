@@ -96,9 +96,23 @@ const THEME_DEFS = {
     arp: true,
     seed: 67,
   },
+  crystal: {
+    bpm: 98,
+    root: 58, // Bb3
+    scale: 'dorian',
+    progression: [0, 3, 4, 5], // i – IV – v – VI
+    kick: 'x.....x...x.....',
+    snare: '........x.......',
+    hat: '..x..x....x..x..',
+    bass: 'x..x......x..x..',
+    rhythm: [0, 2, 5, 7, 8, 11, 14],
+    lead: 'triangle',
+    arp: true,
+    seed: 71,
+  },
 };
 
-const ZONE_THEMES = ['forest', 'desert', 'ice', 'lava', 'shadow', 'sky'];
+const ZONE_THEMES = ['forest', 'desert', 'ice', 'lava', 'shadow', 'sky', 'crystal'];
 
 const parse = (pattern) => [...pattern].map((c) => c === 'x');
 

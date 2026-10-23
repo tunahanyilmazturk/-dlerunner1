@@ -28,6 +28,7 @@ export function createDefaultState() {
       legendaryFound: 0,
       stagesCleared: 0,
       dailyCompleted: 0,
+      bossInterrupts: 0,
       playTime: 0,
     },
     achievements: {

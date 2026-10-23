@@ -8,6 +8,7 @@ export const PET_SPRITES = {
   fairy: { size: [30, 30], flying: true },
   dragonWhelp: { size: [46, 36], flying: true },
   goldCat: { size: [38, 30], flying: false },
+  wiseOwl: { size: [34, 32], flying: true },
 };
 
 const look = 0.35; // göz bebekleri sağa bakar
@@ -122,7 +123,33 @@ function drawGoldCat(g, w, h, phase) {
   s.circle(29, 19, 2.2, 0xfff2a0);
 }
 
-const DRAWERS = { wolfPup: drawWolfPup, fairy: drawFairy, dragonWhelp: drawDragonWhelp, goldCat: drawGoldCat };
+function drawWiseOwl(g, w, h, phase) {
+  const s = outlined(g, { width: 1.5 });
+  const feather = 0x7a8ab8;
+  const belly = 0xc8d4f0;
+  // Kanatlar (çırpma)
+  const up = phase === 0;
+  s.ellipse(5, up ? 14 : 18, 9, up ? 14 : 8, shade(feather, 0.8));
+  s.ellipse(29, up ? 14 : 18, 9, up ? 14 : 8, shade(feather, 0.8));
+  // Gövde
+  s.ellipse(17, 18, 20, 22, feather);
+  g.fillStyle(belly);
+  g.fillEllipse(17, 21, 12, 13);
+  g.fillStyle(shade(belly, 0.85));
+  for (const y of [18, 22]) for (const x of [14, 17, 20]) g.fillCircle(x, y, 1.2);
+  // Kulak tüyleri
+  s.poly([[11, 10], [9, 1], [14, 7]], feather);
+  s.poly([[23, 10], [25, 1], [20, 7]], feather);
+  // Büyük gözler
+  eyes(g, [[13, 11], [21, 11]], 3.4, { look, pupil: 0x1a2a5a, white: 0xfff4d0 });
+  // Gagа
+  s.poly([[15, 13], [19, 13], [17, 16]], 0xe8a03d);
+  // Ayaklar (uçarken toplu)
+  s.rect(14, 27, 3, 4, 0xe8a03d, 1);
+  s.rect(18, 27, 3, 4, 0xe8a03d, 1);
+}
+
+const DRAWERS = { wolfPup: drawWolfPup, fairy: drawFairy, dragonWhelp: drawDragonWhelp, goldCat: drawGoldCat, wiseOwl: drawWiseOwl };
 
 export function createPetTextures(scene) {
   for (const [id, def] of Object.entries(PET_SPRITES)) {

@@ -83,7 +83,7 @@ export class PrestigeSystem {
   /** Relic'ler + pasif bonusun birleşik etkisi. */
   get multipliers() {
     if (!this.cachedMultipliers) {
-      const m = { damage: 1, gold: 1, maxHp: 1, cooldown: 1, soulGain: 1, startStage: 1 };
+      const m = { damage: 1, gold: 1, maxHp: 1, cooldown: 1, soulGain: 1, startStage: 1, skillDamage: 1 };
       for (const relic of RELICS) m[relic.modifier] = relic.value(this.relicLevel(relic.id));
       m.damage *= this.soulBonus;
       m.gold *= this.soulBonus;

@@ -82,6 +82,22 @@ export const QUEST_TEMPLATES = [
     target: () => randInt(3, 8),
     reward: (s) => ({ gold: goldReward(s, 1), shards: 25 }),
   },
+  {
+    id: 'interrupts',
+    icon: '👊',
+    metric: 'bossInterrupts',
+    text: (t) => `${t} kez bossu sersemlet`,
+    target: () => randInt(1, 3),
+    reward: (s) => ({ gold: goldReward(s, 1.5), shards: 30 }),
+  },
+  {
+    id: 'eggs',
+    icon: '🥚',
+    metric: 'eggsHatched',
+    text: (t) => `${t} yoldaş yumurtası aç`,
+    target: () => randInt(1, 3),
+    reward: (s) => ({ gold: goldReward(s, 1.2), shards: 35 }),
+  },
 ];
 
 export const QUEST_TEMPLATE_MAP = Object.fromEntries(QUEST_TEMPLATES.map((q) => [q.id, q]));

@@ -53,6 +53,14 @@ export const PETS = [
     description: 'Uğur getirir: çok daha fazla altın.',
     bonus: { stat: 'gold', base: 0.12, perLevel: 0.03 },
   },
+  {
+    id: 'wiseOwl',
+    name: 'Bilge Baykuş',
+    icon: '🦉',
+    color: 0x9ab8ff,
+    description: 'Bilgelik bahşeder: daha fazla deneyim.',
+    bonus: { stat: 'xpGain', base: 0.08, perLevel: 0.02 },
+  },
 ];
 
 export const PET_MAP = Object.fromEntries(PETS.map((p) => [p.id, p]));
@@ -62,4 +70,5 @@ export const PET_BONUS_LABELS = {
   hpRegen: 'Can yenileme',
   critDamage: 'Kritik hasar',
   gold: 'Altın',
+  xpGain: 'Deneyim',
 };

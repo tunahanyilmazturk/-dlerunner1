@@ -111,6 +111,24 @@ export const ZONES = [
     ],
     boss: 'stormDragon',
   },
+  {
+    id: 'crystal',
+    name: 'Kristal Mağarası',
+    sky: [0x080614, 0x2a1a48],
+    mountain: 0x2e2450,
+    hill: 0x27324e,
+    grass: 0x46528a,
+    dirt: 0x191226,
+    snowCaps: false,
+    enemies: [
+      { type: 'shardling', weight: 4 },
+      { type: 'crystalSpider', weight: 3 },
+      { type: 'prismWisp', weight: 3 },
+      { type: 'caveSnail', weight: 2 },
+      { type: 'gemGolem', weight: 2 },
+    ],
+    boss: 'crystalQueen',
+  },
 ];
 
 export function getZoneInfo(stage) {

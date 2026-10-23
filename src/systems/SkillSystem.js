@@ -49,8 +49,9 @@ export class SkillSystem {
   effectFor(id) {
     const k = this.rank(id) - 1;
     const e = { ...this.get(id).effect };
-    if (e.damageMult) e.damageMult *= 1 + SKILL_RANK.DAMAGE_PER_RANK * k;
-    if (e.summonMult) e.summonMult *= 1 + SKILL_RANK.DAMAGE_PER_RANK * k;
+    const relicMult = this.prestige.multipliers.skillDamage ?? 1;
+    if (e.damageMult) e.damageMult *= (1 + SKILL_RANK.DAMAGE_PER_RANK * k) * relicMult;
+    if (e.summonMult) e.summonMult *= (1 + SKILL_RANK.DAMAGE_PER_RANK * k) * relicMult;
     if (e.attackSpeedMult) e.attackSpeedMult += 0.05 * k;
     if (e.goldMult) e.goldMult += 0.1 * k;
     if (e.healRatio) e.healRatio += 0.01 * k;

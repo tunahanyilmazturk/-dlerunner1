@@ -25,7 +25,7 @@ Oyun tam ekrandır:
 - **Sol alt:** yarı saydam **olay kaydı** (sohbet kutusu gibi): Tümü / Savaş / Ganimet / Sistem sekmeleri;
   boss, elit, seviye, ganimet (nadirlik rengiyle), görev, başarım, rebirth kayıtları. Başlıktaki ▾ veya
   **Enter** ile küçültülür/açılır; kapalıyken yeni kayıt gelince çerçevesi parlar.
-- **Alt çubuk:** solda kayıt düğmesi ve kaynaklar (💠 Parça, 🔮 Ruh Taşı), ortada yetenekler (**1–8**,
+- **Alt çubuk:** solda kayıt düğmesi ve kaynaklar (💠 Parça, 🔮 Ruh Taşı), ortada yetenekler (**1–9**,
   altındaki **OTO** otomatik kullanım), sağda menü ikonları.
 
 | Tuş | İşlev |
@@ -65,7 +65,11 @@ alır, yetenekleri otomatik kullanır, ödülleri toplar, 5 dk rekor gelmezse re
 npm run sim                                            # 120 dk, idle + aktif, 3 seed
 npm run sim -- --minutes 40 --profile idle --seeds 1 --every 2
 npm run sim -- --set ENEMY_SCALING.HP_GROWTH=1.2 --up damage.costGrowth=1.18   # dosyaya dokunmadan dene
+npm run sim -- --minutes 30 --seeds 3 --json                                  # ham sonuçlar (tools/check.js okur)
 ```
+
+`npm run check` birim testleri + 30 dk'lık sim koşusunda denge eşiklerini (kilometre taşı süreleri,
+son aşama, ttk, ölüm sayısı) doğrular — denge değişikliklerinin regresyon kontrolü.
 
 Çıktıdaki `ttk(sn)` ortalama düşmanı öldürme süresidir: ~3–6 sn hedeflenir; sürekli 1'in altıysa oyun
 yürüme hızıyla sınırlıdır (fazla kolay), 15'i geçiyorsa duvar vardır.
@@ -180,7 +184,8 @@ tarafları bozmaz.
 - **Pasif ağaç** 3 kademe × 3 düğüm (her düğüm 10 seviye): hasar, can, saldırı hızı → kritik şans, altın,
   EXP → kritik hasar, hasar azaltma, bekleme süresi. Üst kademeler toplam 10 / 25 harcanan YP ile açılır.
 - **Yeni yetenekler:** 6 Zehirli Bıçak (zamanla hasar, aşama 15), 7 Buz Dalgası (ekrandakileri dondurur,
-  aşama 20), 8 Ruh Kılıçları (etrafında dönen bıçaklar öndekine vurur, aşama 25).
+  aşama 20), 8 Ruh Kılıçları (etrafında dönen bıçaklar öndekine vurur, aşama 25), 9 Kader Kesiği
+  (canı %35'in altındaki hedefe 4 kat vurur, aşama 30).
 - Değerler `data/passives.js` (`PASSIVES`, `SKILL_RANK`), mantık `systems/SkillTreeSystem.js`.
 
 ## Demirci ve setler (B)
@@ -190,7 +195,7 @@ tarafları bozmaz.
   **Otomatik seç** önce aynı yuvadan 3 zayıf eşya arar.
 - **Yeniden Döv:** ek özellikleri yeniden zarlar (ana stat, seviye, güçlendirme ve set korunur);
   her dövme maliyeti %25 artırır.
-- **Setler:** her bölgenin seti var (Korucu, Firavun, Buzul, Cehennem, Gölge, Fırtına). Nadir %25,
+- **Setler:** her bölgenin seti var (Korucu, Firavun, Buzul, Cehennem, Gölge, Fırtına, Prizma). Nadir %25,
   Destansı %40, Efsanevi %60 şansla düştüğü bölgenin setinden gelir. 2/4/6 parçada bonus açılır;
   envanterde set rozeti ve set çipleri, eşya detayında kademeler görünür.
 - Değerler `config/balance.js` → `BLACKSMITH`, `data/sets.js`; mantık `EquipmentSystem`.
@@ -207,9 +212,11 @@ tarafları bozmaz.
 
 ## Bölgeler ve boss mekanikleri
 
-- 6 bölge, her biri 10 aşama: Yeşil Orman, Kızıl Çöl, Buzul Vadisi, Lav Diyarı, **Gölge Ormanı**
+- 7 bölge, her biri 10 aşama: Yeşil Orman, Kızıl Çöl, Buzul Vadisi, Lav Diyarı, **Gölge Ormanı**
   (hayalet, ruh emici, tarikatçı, gölge kurdu, kara ağaç · boss **Gölge Lordu**), **Gök Adaları** (harpi,
-  fırtına ruhu, grifon, göksel muhafız, bulut golemi · boss **Fırtına Ejderhası**). Sonra döngü "II" ile başa döner.
+  fırtına ruhu, grifon, göksel muhafız, bulut golemi · boss **Fırtına Ejderhası**), **Kristal Mağarası**
+  (kıymık, kristal örümcek, prizma ruhu, obsidyen sümükböceği, yakut golemi · boss **Kristal Kraliçe**).
+  Sonra döngü "II" ile başa döner.
 - Bossların mekanikleri (`data/enemies.js` → `mechanics`, ayarlar `BOSS_MECHANICS`):
   - **Yere vurma:** kırmızı **!** uyarısından 1,6 sn sonra ağır vuruş (x2,5). Uyarı sırasında bossa maks.
     canının %7'si kadar hasar verirsen **sersemler** ve vuruş iptal olur — dokunmak ve yetenekler işe yarar.
@@ -219,9 +226,9 @@ tarafları bozmaz.
 
 ## Başarımlar ve Günlük Görevler
 
-- **Başarımlar:** 10 başarım × 5 kademe. Her kademe alındığında Parça (10, 40, 90, 160, 250) ve
+- **Başarımlar:** 13 başarım × 5 kademe. Her kademe alındığında Parça (10, 40, 90, 160, 250) ve
   kalıcı **+%2 hasar ve altın** verir. Ödüller Görevler sekmesinden elle alınır.
-- **Günlük görevler:** Her gün yerel gece yarısı 3 yeni görev gelir (8 şablondan rastgele).
+- **Günlük görevler:** Her gün yerel gece yarısı 3 yeni görev gelir (10 şablondan rastgele).
   İlerleme görev verildiği andan itibaren sayılır. Ödül: oyuncunun kazanç hızına göre altın + Parça.
   Günde 1 kez tamamlanmamış bir görevi değiştirebilirsin.
 - **Günlük sandık:** 3 görevin ödülünü de alınca açılır: +2 Ruh Taşı ve Nadir+ eşya.
@@ -236,7 +243,8 @@ tarafları bozmaz.
 - **Sıfırlanır:** altın, yükseltmeler, aşama, yetenek bekleme süreleri.
   **Kalır:** Ruh Taşları, relic'ler, açılmış yükseltme/yetenek kilitleri, istatistikler, ayarlar.
 - **Pasif bonus:** toplam kazanılan her Ruh Taşı +%5 hasar ve altın verir (harcamak bonusu düşürmez).
-- **Relic'ler** (`data/relics.js`): hasar, altın, can, yetenek bekleme süresi, başlangıç aşaması, Ruh Taşı kazancı.
+- **Relic'ler** (`data/relics.js`): hasar, altın, can, yetenek bekleme süresi, yetenek hasarı,
+  başlangıç aşaması, Ruh Taşı kazancı.
 - `highestStage` koşuya özeldir (Ruh Taşı hesabı), `bestStage` tüm zamanlarındır (kilitler).
 
 ## Nasıl genişletilir?
@@ -274,10 +282,12 @@ tarafları bozmaz.
 - [x] Aktif yetenekler: 5 yetenek, bekleme süresi, tuş kısayolu, otomatik kullanım
 - [x] Yetenek ağacı: yetenek puanı, 20 seviyeli aktif yetenekler, 3 kademeli pasif ağaç, 3 yeni yetenek
 - [x] Ekipman: 5 nadirlik, 4 yuva, rastgele özellikler, güçlendirme, parçalama, otomatik kuşan/parçala
-- [x] Prestige (rebirth): Ruh Taşı, pasif bonus, 6 relic
-- [x] Başarımlar (10 × 5 kademe) ve günlük görevler (3/gün, değiştirme, günlük sandık)
+- [x] Prestige (rebirth): Ruh Taşı, pasif bonus, 7 relic
+- [x] Başarımlar (13 × 5 kademe) ve günlük görevler (3/gün, değiştirme, günlük sandık)
 - [x] Ses efektleri ve müzik (sentezlenmiş, bölge temaları, boss müziği, ses ayarları)
 - [x] Demirci: birleştirme, yeniden dövme, 6 bölge seti
-- [x] Yoldaşlar: yumurta, 4 evcil hayvan, seviye/besleme, koleksiyon bonusu
+- [x] Yoldaşlar: yumurta, 5 evcil hayvan, seviye/besleme, koleksiyon bonusu
 - [x] 2 yeni bölge (Gölge Ormanı, Gök Adaları), 10 yeni düşman, 2 yeni boss, boss mekanikleri
+- [x] 7. bölge (Kristal Mağarası), 5 yeni düşman, Kristal Kraliçe, Prizma seti; Kader Kesiği yeteneği,
+  Bilge Baykuş yoldaşı, Büyü Kitabı relic'i, `npm run check` denge kontrolü
 - [ ] Gerçek sprite'lar

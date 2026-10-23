@@ -65,6 +65,16 @@ const SCENERY = {
       { texture: 'spark', depth: 14, x: { min: 0, max: GAME_WIDTH }, y: GAME_HEIGHT + 10, lifespan: { min: 3000, max: 5000 }, speedX: { min: -40, max: 10 }, speedY: { min: -90, max: -35 }, scale: { start: 0.35, end: 0 }, alpha: { start: 1, end: 0 }, tint: [0xff7a2b, 0xffc14d, 0xff4a1f], frequency: 70, blendMode: 'ADD' },
     ],
   },
+  crystal: {
+    celestial: { x: 500, y: 110, scale: 1.15 },
+    stars: 0.45,
+    aurora: true,
+    clouds: { tint: 0x2a2040, alpha: 0.5 },
+    particles: [
+      { texture: 'spark', depth: -55, x: { min: 0, max: GAME_WIDTH }, y: { min: 150, max: 430 }, lifespan: { min: 3000, max: 5000 }, speedX: { min: -20, max: 5 }, speedY: { min: -25, max: -5 }, scale: { start: 0.3, end: 0.05 }, alpha: { start: 1, end: 0 }, tint: [0x8fe8ff, 0xb06bff], frequency: 240, blendMode: 'ADD' },
+      { texture: 'spark', depth: 14, x: { min: 0, max: GAME_WIDTH + 50 }, y: { min: 40, max: 140 }, lifespan: 6000, speedX: { min: -15, max: 5 }, speedY: { min: 15, max: 35 }, scale: { min: 0.1, max: 0.3 }, alpha: { start: 0.9, end: 0.2 }, tint: [0x8fe8ff, 0xd08fff], frequency: 90 },
+    ],
+  },
 };
 
 export class ParallaxBackground {

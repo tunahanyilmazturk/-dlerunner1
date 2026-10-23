@@ -43,6 +43,13 @@ export const ENEMY_TYPES = {
   cloudGolem: { name: 'Bulut Golemi', texture: 'enemy_cloudGolem', hpMult: 2.4, damageMult: 1.7, goldMult: 2, speed: 18, attackInterval: 1.9, scale: 1, motion: 'walk', deathColor: 0xf2f7ff },
   skyGuard: { name: 'Göksel Muhafız', texture: 'enemy_skeleton', tint: 0xfff0a0, hpMult: 1.3, damageMult: 1.5, goldMult: 1.4, speed: 42, attackInterval: 1.2, scale: 1, motion: 'walk', deathColor: 0xfff0a0 },
 
+  // ---------------------------------------------------- Kristal Mağarası
+  shardling: { name: 'Kıymık', texture: 'enemy_shardling', hpMult: 0.7, damageMult: 1, goldMult: 0.9, speed: 75, attackInterval: 1.0, scale: 1, motion: 'hop', deathColor: 0x8fe8ff },
+  crystalSpider: { name: 'Kristal Örümcek', texture: 'enemy_crystalSpider', hpMult: 0.9, damageMult: 1.5, goldMult: 1.2, speed: 80, attackInterval: 0.9, scale: 1, motion: 'walk', deathColor: 0xb06bff },
+  caveSnail: { name: 'Obsidyen Sümükböceği', texture: 'enemy_caveSnail', hpMult: 1.6, damageMult: 1.2, goldMult: 1.4, speed: 16, attackInterval: 1.8, scale: 1, motion: 'squish', deathColor: 0x4a6a9a },
+  gemGolem: { name: 'Yakut Golem', texture: 'enemy_gemGolem', hpMult: 2.0, damageMult: 1.7, goldMult: 1.8, speed: 20, attackInterval: 1.8, scale: 1, motion: 'walk', deathColor: 0xff5a8a },
+  prismWisp: { name: 'Prizma Ruhu', texture: 'enemy_prismWisp', hpMult: 0.7, damageMult: 1.4, goldMult: 1.1, speed: 95, attackInterval: 0.95, scale: 1, motion: 'fly', flyHeight: 55, deathColor: 0xd08fff },
+
   // ---------------------------------------------------- Eski / ortak
   golem: { name: 'Golem', texture: 'enemy_golem', hpMult: 2.2, damageMult: 1.6, goldMult: 1.8, speed: 20, attackInterval: 1.8, scale: 1, motion: 'walk', deathColor: 0x9aa1ab },
 
@@ -53,6 +60,7 @@ export const ENEMY_TYPES = {
   fireDemon: { name: 'Ateş İblisi', texture: 'boss_demon', mechanics: ['slam', 'enrage', 'shield'], hpMult: 1.3, damageMult: 1.25, goldMult: 1.1, speed: 28, attackInterval: 1.4, scale: 1, motion: 'walk', deathColor: 0xff6a3d },
   shadowLord: { name: 'Gölge Lordu', texture: 'boss_shadow', mechanics: ['slam', 'enrage', 'shield'], hpMult: 1.35, damageMult: 1.3, goldMult: 1.15, speed: 26, attackInterval: 1.4, scale: 1, motion: 'walk', deathColor: 0xb06bff },
   stormDragon: { name: 'Fırtına Ejderhası', texture: 'boss_dragon', mechanics: ['slam', 'enrage', 'shield'], hpMult: 1.45, damageMult: 1.35, goldMult: 1.2, speed: 30, attackInterval: 1.3, scale: 1, motion: 'walk', deathColor: 0x7fe0ff },
+  crystalQueen: { name: 'Kristal Kraliçe', texture: 'boss_crystalQueen', mechanics: ['slam', 'enrage', 'shield'], hpMult: 1.4, damageMult: 1.3, goldMult: 1.2, speed: 26, attackInterval: 1.5, scale: 1, motion: 'walk', deathColor: 0x8fe8ff },
 };
 
 // Eski kayıtlarda/simülasyonlarda geçebilecek boss anahtarı

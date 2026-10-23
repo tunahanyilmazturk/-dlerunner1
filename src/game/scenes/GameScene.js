@@ -264,6 +264,7 @@ export class GameScene extends Phaser.Scene {
         this.enemyAttack(boss, boss.mechanics.damageMult * ev.mult);
       } else if (ev.type === 'interrupted') {
         boss.clearTelegraph();
+        this.ctx.state.stats.bossInterrupts++;
         say('SERSEMLEDİ!', '#ffd23f', 22);
         this.tweens.add({ targets: boss.sprite, angle: { from: -8, to: 8 }, duration: 70, yoyo: true, repeat: 3 });
       } else if (ev.type === 'shieldStart') {
@@ -338,10 +339,12 @@ export class GameScene extends Phaser.Scene {
     } else if (effect.type === 'strike') {
       const target = this.enemies.front;
       if (!target) return;
+      const executing = effect.executeBelow && target.hp / target.maxHp <= effect.executeBelow;
+      const mult = executing ? effect.damageMult * effect.executeMult : effect.damageMult;
       this.effects.lightning(target.x, target.centerY, color);
       this.cameras.main.flash(120, 255, 250, 210);
-      if (screenShake) this.cameras.main.shake(150, 0.008);
-      this.applyDamage(target, rollHit(stats.damage * effect.damageMult, stats), 'skill');
+      if (screenShake) this.cameras.main.shake(150, executing ? 0.012 : 0.008);
+      this.applyDamage(target, rollHit(stats.damage * mult, stats), 'skill');
     } else if (effect.type === 'dot') {
       const target = this.enemies.front;
       if (!target) return;

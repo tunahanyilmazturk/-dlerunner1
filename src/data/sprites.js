@@ -32,6 +32,12 @@ export const ENEMY_SPRITES = {
   enemy_cloudGolem: { size: [72, 78] },
   boss_shadow: { size: [126, 130] },
   boss_dragon: { size: [140, 134] },
+  enemy_shardling: { size: [40, 36], frames: 2 },
+  enemy_crystalSpider: { size: [64, 44], frames: 2 },
+  enemy_caveSnail: { size: [62, 46] },
+  enemy_gemGolem: { size: [74, 82] },
+  enemy_prismWisp: { size: [46, 46], frames: 2 },
+  boss_crystalQueen: { size: [122, 132] },
 };
 
 /** Animasyonlu dokularda ilk kare anahtarı; diğerlerinde dokunun kendisi. */

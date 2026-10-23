@@ -70,6 +70,17 @@ export const SETS = [
       { pieces: 6, stats: { damage: 0.3, xpGain: 0.2 } },
     ],
   },
+  {
+    id: 'crystal',
+    name: 'Prizma',
+    icon: '💎',
+    color: 0x8fe8ff,
+    tiers: [
+      { pieces: 2, stats: { defense: 0.03 } },
+      { pieces: 4, stats: { critDamage: 0.35 } },
+      { pieces: 6, stats: { damage: 0.25, critChance: 0.02 } },
+    ],
+  },
 ];
 
 export const SET_MAP = Object.fromEntries(SETS.map((s) => [s.id, s]));

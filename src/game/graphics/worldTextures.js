@@ -509,6 +509,77 @@ function cloudBank(g, w, y, color, alpha, rng, size = 40) {
   g.fillRect(0, y + 6, w, 200);
 }
 
+// Kristal Mağarası: tavandan sarkan sarkıtlar, parlayan kristal kümeleri, karanlık zemin
+PAINTERS.crystal = {
+  far(g, w, h, z) {
+    const back = shade(z.mountain, 1.2);
+    for (const [px, ph, pw] of [[60, 150, 130], [230, 190, 150], [420, 140, 140], [610, 200, 160], [800, 160, 150], [960, 130, 130]]) {
+      wrapX(w, px, pw, (x) => {
+        g.fillStyle(back);
+        g.fillTriangle(x - pw, h, x, h - ph, x + pw, h);
+        g.fillStyle(shade(back, 1.35));
+        g.fillTriangle(x - pw * 0.28, h - ph * 0.5, x, h - ph, x + pw * 0.14, h - ph * 0.42);
+      });
+    }
+    // Tavandan sarkan kristal sarkıtlar
+    for (const [px, ph, pw] of [[150, 90, 60], [350, 120, 70], [540, 80, 55], [730, 110, 65], [920, 95, 60]]) {
+      wrapX(w, px, pw, (x) => {
+        g.fillStyle(shade(back, 0.8));
+        g.fillTriangle(x - pw, 0, x + pw, 0, x, ph);
+      });
+    }
+  },
+  mid(g, w, h, z, rng) {
+    const back = ridge(g, w, h, 100, [[16, 2, 0], [8, 5, 1]], shade(z.hill, 0.85));
+    for (let x = 30; x < w; x += 80 + rng() * 80) {
+      wrapX(w, x, 40, (px) => {
+        const size = 40 + rng() * 40;
+        g.fillStyle(shade(z.hill, 0.7));
+        g.fillTriangle(px - size * 0.4, back(px) + 8, px, back(px) - size, px + size * 0.4, back(px) + 8);
+        g.fillStyle(0x8fe8ff, 0.55);
+        g.fillTriangle(px - 3, back(px) - size * 0.4, px, back(px) - size * 0.9, px + 3, back(px) - size * 0.35);
+      });
+    }
+    ridge(g, w, h, 155, [[9, 3, 2], [5, 6, 0]], z.hill);
+    g.fillStyle(0x8fe8ff, 0.08);
+    g.fillRect(0, h - 50, w, 26);
+  },
+  near(g, w, h, z, rng) {
+    for (let x = 30; x < w; x += 110 + rng() * 120) wrapX(w, x, 40, (px) => crystal(g, px, h - 10, 34 + rng() * 34, rng() > 0.5 ? 0x8fe8ff : 0xb06bff));
+    scatter(rng, w, 8, 15, (x) => glowShroom(g, x, h - 8, 6 + rng() * 5, rng() > 0.4 ? 0x8fe8ff : 0xd06bff));
+    scatter(rng, w, 5, 20, (x) => rock(g, x, h - 8, 12 + rng() * 8, shade(z.dirt, 1.4)));
+  },
+  ground(g, w, h, z, rng) {
+    g.fillStyle(z.dirt);
+    g.fillRect(0, 14, w, h - 14);
+    // Parlayan kristal damarları
+    strata(g, w, 58, 0x8fe8ff, 4, 2);
+    strata(g, w, 92, 0xb06bff, 3, 3);
+    g.fillStyle(z.grass);
+    g.fillRect(0, 6, w, 14);
+    g.fillStyle(shade(z.grass, 0.7));
+    g.fillRect(0, 18, w, 4);
+    scatter(rng, w, 8, 8, (x) => {
+      g.fillStyle(rng() > 0.5 ? 0x8fe8ff : 0xd08fff, 0.9);
+      g.fillCircle(x, 9 + rng() * 5, 1.4);
+    });
+    scatter(rng, w, 5, 10, (x) => crystal(g, x, 20 + rng() * 10, 8 + rng() * 6, 0x6fb8d8));
+  },
+  fore(g, w, h, z, rng) {
+    for (let x = 15; x < w; x += 50 + rng() * 90) {
+      wrapX(w, x, 30, (px) => {
+        const s = outlined(g, { width: 1.5 });
+        const size = 24 + rng() * 30;
+        s.poly([[px - size * 0.4, h], [px - size * 0.1, h - size], [px + size * 0.15, h - size * 0.3], [px + size * 0.45, h]], 0x141024);
+        g.fillStyle(0x8fe8ff, 0.8);
+        g.fillCircle(px - size * 0.08, h - size * 0.7, 1.5);
+      });
+    }
+    g.fillStyle(0x8fe8ff, 0.06);
+    g.fillRect(0, h - 20, w, 20);
+  },
+};
+
 PAINTERS.sky = {
   far(g, w, h, z, rng) {
     cloudBank(g, w, h - 60, 0xffffff, 0.55, rng, 60);
@@ -594,6 +665,7 @@ const CELESTIALS = {
   lava: { body: '#ff5a3c', glow: 'rgba(255,60,40,0.5)', craters: true },
   shadow: { body: '#e8d8ff', glow: 'rgba(180,120,255,0.45)', craters: true },
   sky: { body: '#fffbe6', glow: 'rgba(255,230,160,0.7)' },
+  crystal: { body: '#c8f0ff', glow: 'rgba(140,210,255,0.5)', craters: true },
 };
 
 function createSkyTextures(scene) {

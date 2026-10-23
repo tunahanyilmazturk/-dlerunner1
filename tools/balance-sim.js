@@ -168,7 +168,7 @@ function manageMeta(w) {
   spendSkillPoints(w);
   // Yumurtaları aç; en güçlü saldıran yoldaşı aktif et
   while (pets.data.eggs > 0) pets.hatch();
-  const preferred = ['dragonWhelp', 'wolfPup', 'goldCat', 'fairy'].find((id) => pets.owned(id));
+  const preferred = ['dragonWhelp', 'wolfPup', 'goldCat', 'fairy', 'wiseOwl'].find((id) => pets.owned(id));
   if (preferred) pets.setActive(preferred);
   for (const q of quests.list) quests.claim(q.id);
   quests.claimBonus();
@@ -285,7 +285,11 @@ function runSim({ minutes, profile, seed }) {
     } else if (effect.type === 'aoe') {
       for (const e of enemies.filter(visible)) hit(e, rollHit(stats.damage * effect.damageMult, stats));
     } else if (effect.type === 'strike') {
-      if (enemies[0]) hit(enemies[0], rollHit(stats.damage * effect.damageMult, stats));
+      const e = enemies[0];
+      if (e) {
+        const mult = effect.executeBelow && e.hp / e.cfg.maxHp <= effect.executeBelow ? effect.damageMult * effect.executeMult : effect.damageMult;
+        hit(e, rollHit(stats.damage * mult, stats));
+      }
     } else if (effect.healRatio) {
       hp = Math.min(maxHp, hp + maxHp * effect.healRatio);
     }
@@ -504,9 +508,12 @@ const median = (values) => {
   return v.length < values.length / 2 ? undefined : v[Math.floor(v.length / 2)];
 };
 
+const allRuns = {};
 for (const profile of selectedProfiles) {
   const runs = [];
   for (let seed = 1; seed <= SEEDS; seed++) runs.push(runSim({ minutes: MINUTES, profile, seed }));
+  allRuns[profile.name] = runs;
+  if (args.json) continue;
 
   console.log(`\n=== Profil: ${profile.name} · ${MINUTES} dk · ${SEEDS} seed ===`);
   console.log('Kilometre taşları (medyan dk:sn → en iyi aşamaya ilk ulaşma)');
@@ -535,3 +542,6 @@ for (const profile of selectedProfiles) {
     }
   }
 }
+
+// --json: rapor yerine ham sonuçlar (tools/check.js bunu okur)
+if (args.json) console.log(JSON.stringify(allRuns));

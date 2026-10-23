@@ -93,6 +93,30 @@ export const ACHIEVEMENTS = [
     tiers: [3, 21, 90, 300, 1000],
     describe: (t) => `${formatNumber(t)} günlük görev tamamla`,
   },
+  {
+    id: 'stunner',
+    name: 'Sersemletici',
+    icon: '💫',
+    metric: 'bossInterrupts',
+    tiers: [1, 10, 50, 200, 1000],
+    describe: (t) => `${formatNumber(t)} kez bossu sersemlet`,
+  },
+  {
+    id: 'keeper',
+    name: 'Yoldaş Terbiyecisi',
+    icon: '🥚',
+    metric: 'eggsHatched',
+    tiers: [1, 5, 15, 50, 150],
+    describe: (t) => `${formatNumber(t)} yumurta aç`,
+  },
+  {
+    id: 'sage',
+    name: 'Bilge',
+    icon: '📜',
+    metric: 'relicLevels',
+    tiers: [1, 5, 15, 40, 100],
+    describe: (t) => `Toplam ${formatNumber(t)} relic seviyesi al`,
+  },
 ];
 
 export const ACHIEVEMENT_MAP = Object.fromEntries(ACHIEVEMENTS.map((a) => [a.id, a]));

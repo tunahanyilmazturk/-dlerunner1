@@ -58,7 +58,7 @@ export class PetSystem {
   /** { damage, hpRegen, critDamage, gold }: aktif yoldaş tam, diğerleri koleksiyon oranında. */
   get bonuses() {
     if (!this.cachedBonuses) {
-      const totals = { damage: 0, hpRegen: 0, critDamage: 0, gold: 0 };
+      const totals = { damage: 0, hpRegen: 0, critDamage: 0, gold: 0, xpGain: 0 };
       for (const id of Object.keys(this.data.owned)) {
         const ratio = id === this.data.active ? 1 : PET.COLLECTION_RATIO;
         totals[PET_MAP[id].bonus.stat] += this.bonusValue(id) * ratio;

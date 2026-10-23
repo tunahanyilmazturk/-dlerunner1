@@ -1,7 +1,20 @@
 import { ENEMY_SPRITES } from '../../data/sprites.js';
 import { shade } from '../../utils/color.js';
 import { OUTLINE, eyes, glowEyes, make, outlined } from './draw.js';
-import { drawCultist, drawGhost, drawGriffin, drawHarpy, drawShadowLord, drawStormDragon, drawWraith } from './enemyTexturesExtra.js';
+import {
+  drawCaveSnail,
+  drawCrystalQueen,
+  drawCrystalSpider,
+  drawCultist,
+  drawGhost,
+  drawGriffin,
+  drawHarpy,
+  drawPrismWisp,
+  drawShadowLord,
+  drawShardling,
+  drawStormDragon,
+  drawWraith,
+} from './enemyTexturesExtra.js';
 
 // Düşman çizimleri. Hepsi sola (oyuncuya) bakar; ayaklar tuvalin altındadır.
 // phase: 0/1 → iki karelik yürüme/kanat animasyonu (ENEMY_SPRITES'ta frames: 2 olanlar).
@@ -290,6 +303,7 @@ const GOLEM_PALETTES = {
   magma: { rock: 0x3a2c2e, dark: 0x261c1e, glow: 0xff7a2b, extra: 'lava' },
   bark: { rock: 0x4a3a2e, dark: 0x33281f, glow: 0x7dff9a, extra: 'moss' },
   cloud: { rock: 0xf2f7ff, dark: 0xc6d6ea, glow: 0x5fb4ff, extra: 'snow' },
+  gem: { rock: 0xb84a6a, dark: 0x6e2438, glow: 0x8fe8ff, extra: 'gem' },
 };
 
 function drawGolem(g, w, h, _phase, pal) {
@@ -321,6 +335,17 @@ function drawGolem(g, w, h, _phase, pal) {
     g.fillEllipse(12, oy + 24, 18, 6);
     g.fillEllipse(60, oy + 24, 18, 6);
     s.poly([[44, oy + 26], [48, oy + 14], [52, oy + 27]], 0xd6f4ff);
+  } else if (pal.extra === 'gem') {
+    // Omuzlarda ve gövdede kristal çıkıntıları
+    s.poly([[6, oy + 30], [11, oy + 16], [16, oy + 30]], pal.glow);
+    s.poly([[58, oy + 28], [63, oy + 14], [68, oy + 28]], pal.glow);
+    s.poly([[30, oy + 4], [34, oy - 8], [38, oy + 4]], pal.glow);
+    g.fillStyle(0xffffff, 0.8);
+    g.fillTriangle(11, oy + 18, 12, oy + 22, 13, oy + 18);
+    g.fillStyle(pal.glow, 0.5);
+    g.fillCircle(36, oy + 44, 6);
+    g.fillStyle(0xffffff, 0.7);
+    g.fillCircle(36, oy + 44, 2.5);
   } else {
     g.fillStyle(0x5f8f4a);
     g.fillEllipse(40, oy + 27, 14, 5);
@@ -483,6 +508,12 @@ const DRAWERS = {
   enemy_cloudGolem: (g, w, h, p) => drawGolem(g, w, h, p, GOLEM_PALETTES.cloud),
   boss_shadow: drawShadowLord,
   boss_dragon: drawStormDragon,
+  enemy_shardling: drawShardling,
+  enemy_crystalSpider: drawCrystalSpider,
+  enemy_caveSnail: drawCaveSnail,
+  enemy_gemGolem: (g, w, h, p) => drawGolem(g, w, h, p, GOLEM_PALETTES.gem),
+  enemy_prismWisp: drawPrismWisp,
+  boss_crystalQueen: drawCrystalQueen,
 };
 
 export function createEnemyTextures(scene) {

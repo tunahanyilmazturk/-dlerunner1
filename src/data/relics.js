@@ -75,6 +75,18 @@ export const RELICS = [
     value: (l) => 1 + 0.1 * l,
     format: (v) => `x${v.toFixed(1)}`,
   },
+  {
+    id: 'grimoire',
+    name: 'Büyü Kitabı',
+    icon: '📖',
+    description: 'Yeteneklerin hasarını kalıcı olarak artırır.',
+    modifier: 'skillDamage',
+    baseCost: 3,
+    costGrowth: 1.7,
+    maxLevel: Infinity,
+    value: (l) => 1 + 0.15 * l,
+    format: (v) => `x${v.toFixed(2)}`,
+  },
 ];
 
 export const RELIC_MAP = Object.fromEntries(RELICS.map((r) => [r.id, r]));
